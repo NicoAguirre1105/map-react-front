@@ -1,0 +1,19 @@
+.fileItem {
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    margin-top: 5px;
+}
+
+.fileName {
+    display: flex;
+    flex-direction: column;
+}
+
+.filesButtons{
+    display: flex;
+}
+
+.fileButton {
+    margin-right: 10px;
+}

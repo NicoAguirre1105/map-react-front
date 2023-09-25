@@ -1,0 +1,6 @@
+
+.rulesList {
+    display: flex;
+    margin-top: 30px;
+    min-width: 400px;
+}
