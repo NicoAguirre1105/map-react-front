@@ -33,7 +33,7 @@ const Menu = () => {
         <Tabs.List>
         <Tabs.Tab className={classes.mainLink} value="Home">HOME</Tabs.Tab>
           <Tabs.Tab className={classes.mainLink} value="About">ABOUT</Tabs.Tab>
-          <Tabs.Tab className={classes.mainLink} value="Presets">RULES SETUP</Tabs.Tab>
+         {/*<Tabs.Tab className={classes.mainLink} value="Presets">RULES SETUP</Tabs.Tab>*/}
           <Tabs.Tab className={classes.mainLink} value="Download">UPLOAD FILES</Tabs.Tab>
         </Tabs.List>
        </Tabs>

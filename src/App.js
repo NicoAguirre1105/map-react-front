@@ -21,7 +21,7 @@ function App() {
       <Route path="/Home" exact component={Home} />
       <Route path="/Download" component={Download}/>
       <Route path="/About" component={About}/>
-      <Route path="/Presets" component={Presets}/>
+      {/*<Route path="/Presets" component={Presets}/>*/}
       <Route path="/ProcessFile" component={ProcessFile}/>
       </Router>
       </div>

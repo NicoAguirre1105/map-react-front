@@ -36,7 +36,10 @@ const Home = () => {
         </Text>
 
         <Group>
-          <Link to="/Presets"><Button
+          <Link 
+          /*to="/Presets"*/
+          to="/Download"
+          ><Button
             size="xl"
             color="violet"
             onClick={handleReset}>
