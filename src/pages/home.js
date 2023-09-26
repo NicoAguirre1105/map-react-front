@@ -1,26 +1,62 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { resetVariable } from '../actions/fileAction';
 import { Link } from 'react-router-dom';
+import { resetVariable } from '../actions/fileAction';
+import { Container, Text, Title, Button, Group } from '@mantine/core';
+import '../css/home.css'
+
 const Home = () => {
   const dispatch = useDispatch();
   const handleReset = () => {
     dispatch(resetVariable());
   };
+
   return (
-    <div className='homeText'>
-      <h1 >In ultricies fermentum aliquet. Pellentesque
-        dui magna, condimentum non ullamcorper at,
-        cursus in sem. Nunc condimentum, purus ac
-        sagittis ultricies, metus leo pharetra mi, non
-        vehicula felis elit et nisi.In ultricies fermentum aliquet. Pellentesque
-        dui magna, condimentum non ullamcorper at,
-        cursus in sem. Nunc condimentum, purus ac
-        sagittis ultricies, metus leo pharetra mi, non
-        vehicula felis elit et nisi.</h1>
-      <Link to="/Settings" ><button onClick={handleReset} > lol</button></Link>
+    <div className="homePage">
+      <Container size={700} className="homeText">
+        <Title className="name">
+          The application{' '}
+          <Text component="span" color="violet">
+            Map
+          </Text>{' '}
+          is a tool designed to check student's work
+        </Title>
+
+        <Text className="description" color="dimmed">
+          "Map" scans the text of the paper and highlights
+          problematic areas. This way, students receive
+          immediate feedback and have the opportunity
+          to enhance their writing skills.
+          The application provides statistics of work.
+          "Map" analyzes parameters such as word frequency,
+          use of academic vocabulary,
+          and text structure. This information allows students
+          to better understand their weaknesses and
+          focus on improving.
+        </Text>
+
+        <Group>
+          <Link 
+          /*to="/Presets"*/
+          to="/Download"
+          ><Button
+            size="xl"
+            color="violet"
+            onClick={handleReset}>
+            Get started
+          </Button></Link>
+        </Group>
+
+      </Container>
+
+      <div className="papers">
+        <img src={require('../images/paper.webp')} className="paper1" alt="paper" />
+        <img src={require('../images/paper.webp')} className="paper2" alt="paper" />
+      </div>
+
     </div>
   );
 };
 
-export default Home; 
+export default Home;
+ 

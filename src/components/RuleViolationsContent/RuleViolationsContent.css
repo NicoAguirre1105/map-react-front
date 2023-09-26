@@ -1,0 +1,32 @@
+.main {
+    display: flex;
+    justify-content: center;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+}
+
+.ruleViolations {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 1000px;
+}
+
+.ruleViolationsHeader {
+    display: flex;
+    min-width: 1000px;
+    padding-bottom: 25px;
+
+}
+
+.sortedRuleViolationsList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    min-width: 400px;
+}

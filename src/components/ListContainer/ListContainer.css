@@ -1,0 +1,55 @@
+.pageContainer {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.listPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: rgb(233, 233, 233);
+  padding: 30px 10px 10px 20px;
+  width: 1000px;
+  height: 100vh;
+}
+
+.listHead {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.listContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.listName {
+  display: inline-block;
+  margin-top: 20px;
+  width: 500px;
+}
+
+.listButtons {
+  display: flex;
+  justify-content: end;
+  margin: 10px;
+  width: 400px
+}
+
+.listButton {
+  margin: 5px;
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
