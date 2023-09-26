@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { createStyles, Container, Tabs, rem } from '@mantine/core';
 import RuleViolationsContent from '../RuleViolationsContent/RuleViolationsContent';
+import Statistics from '../Statistics/Statistics';
 
 const RuleViolationsHeader = ({ tabs }) => {
   const useStyles = createStyles((theme) => ({
@@ -56,6 +57,10 @@ const RuleViolationsHeader = ({ tabs }) => {
 
           <Tabs.Panel value="Violations">
             <RuleViolationsContent/>
+          </Tabs.Panel>
+
+          <Tabs.Panel value="Statistics">
+            <Statistics/>
           </Tabs.Panel>
 
         </Tabs>

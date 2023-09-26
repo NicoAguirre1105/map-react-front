@@ -1,0 +1,28 @@
+
+.statistics {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 1000px;
+}
+
+.title {
+    margin-top: 30px;
+    display: flex;
+    width: 500px;
+}
+.pageStatisticsContent {
+    display: flex;
+}
+.sectionsList {
+    display: inline;
+    margin-top: 70px;
+}
+
+.section {
+    display: flex;
+    margin: 10px;
+}
+.swatch {
+    margin-right: 10px;
+}
