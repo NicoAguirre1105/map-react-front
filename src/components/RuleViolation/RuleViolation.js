@@ -1,5 +1,6 @@
 import React from 'react';
 import { List, Accordion } from '@mantine/core';
+import './RuleViolation.css'
 
 const RuleViolation = ({ violations, category, categoryName }) => {
   return (
@@ -10,9 +11,11 @@ const RuleViolation = ({ violations, category, categoryName }) => {
           {violations
             .filter((v) => category === v[categoryName])
             .map(violation =>
-              <List.Item>
+              <div className="ruleViolationItem">
+              <List.Item  onClick={() => {console.log('cringe')}}>
                 {violation.title} {violation.page} {violation.section}
               </List.Item>
+              </div>
             )}
         </List>
       </Accordion.Panel>

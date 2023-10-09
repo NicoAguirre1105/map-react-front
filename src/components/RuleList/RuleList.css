@@ -2,5 +2,10 @@
 .rulesList {
     display: flex;
     margin-top: 30px;
-    min-width: 400px;
+    width: 400px;
+}
+@media (max-width: 1400px) {
+    .rulesList {
+        width: calc(180px + 495 * (100vw / 1280)) ;
+    }
 }

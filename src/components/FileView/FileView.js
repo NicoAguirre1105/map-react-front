@@ -11,9 +11,9 @@ const FileView = () => {
     <div className="filePage">
       {currentFile && (
         <Document file={currentFile}>
-          <Page
+          <Page renderAnnotationLayer={false}
           renderTextLayer={false} wrap={true} pageNumber={1} />
-          <Page renderTextLayer={false} wrap={true} pageNumber={2} />
+          <Page renderAnnotationLayer={false} renderTextLayer={false} wrap={true} pageNumber={2} />
         </Document>
       )}
     </div>
