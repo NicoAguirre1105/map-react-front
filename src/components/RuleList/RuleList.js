@@ -1,11 +1,11 @@
 import React from 'react';
-import { Checkbox, Accordion, List } from '@mantine/core';
+import { Checkbox, Accordion, Group } from '@mantine/core';
 import Rule from '../Rule/Rule.js';
 import './RuleList.css'
 
-const RuleList = ({ rules, value, onChange }) => {
+const RuleList = ({ rules, value, onChange, visibility }) => {
   return (
-    <div className="rulesList">
+    <div className="rulesList" style={{ visibility: visibility }}>
       <Accordion
         color="violet"
         variant="filled"
@@ -14,13 +14,16 @@ const RuleList = ({ rules, value, onChange }) => {
         <Accordion.Item value="customization">
           <Accordion.Control>Rules</Accordion.Control>
           <Accordion.Panel>
-            <List withPadding spacing="xs">
-              <Checkbox.Group size="lg" value={value} onChange={onChange}>
+            <Checkbox.Group
+              value={value} onChange={onChange}
+              defaultValue={rules.map(r => r.title)}
+            >
+              <Group >
                 {rules.map(rule =>
                   <Rule rule={rule} />
                 )}
-              </Checkbox.Group>
-            </List>
+              </Group>
+            </Checkbox.Group>
           </Accordion.Panel>
         </Accordion.Item>
       </Accordion>

@@ -15,11 +15,11 @@ const Home = () => {
     <div className="homePage">
       <Container size={700} className="homeText">
         <Title className="name">
-          The application{' '}
+          The application{' '}<br/>
           <Text component="span" color="violet">
-            Map
-          </Text>{' '}
-          is a tool designed to check student's work
+            MAP
+          </Text>{' '}<br/>
+          is a tool designed<br/> to check student's <br/>work
         </Title>
 
         <Text className="description" color="dimmed">
