@@ -1,13 +1,17 @@
 .fileItem {
     display: flex;
     justify-content: space-between;
-    width: 900px;
+    width: calc(25px + 875 * (100vw / 1280));
+    max-width: 1000px;
     margin-top: 5px;
 }
 
 .fileName {
-    display: flex;
-    flex-direction: column;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 200px;
+    height: 1.2em;
+    white-space: nowrap;
 }
 
 .filesButtons{

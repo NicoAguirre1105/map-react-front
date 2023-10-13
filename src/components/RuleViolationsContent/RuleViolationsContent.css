@@ -9,7 +9,10 @@
     justify-content: center;
     margin: 0;
 }
-
+.selected-item {
+    background-color: yellow; /* Любой цвет выделения, который вы хотите использовать */
+    cursor: pointer; /* Опционально: меняем курсор при наведении */
+  }
 .ruleViolations {
     display: flex;
     justify-content: center;

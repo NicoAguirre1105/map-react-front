@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { List } from '@mantine/core';
@@ -6,27 +5,42 @@ import RuleViolationList from '../RuleViolationList/RuleViolationsList';
 import RuleSelect from '../RuleSelect/RuleSelect';
 import RuleList from '../RuleList/RuleList';
 import FileView from '../FileView/FileView';
+import { rulesFul } from '../../rules';
 import './RuleViolationsContent.css'
-
+import { useDispatch } from 'react-redux';
+import { setCurrentLine,setCurrentPage} from '../../actions/fileAction';
 const RuleViolationsContent = () => {
-  const rules = [
-    { title: 'Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1', body: 'description' },
-    { title: 'Rule2', body: 'description' },
-    { title: 'Rule3', body: 'description' },
-    { title: 'Rule4', body: 'description' },
-    { title: 'Rule5', body: 'description' },
-  ]
-
-  const ruleViolations = [
-    { title: 'Rule1', page: '1', section: 'introduction', line: 10 },
-    { title: 'Rule1', page: '2', section: 'introduction', line: 10 },
-    { title: 'Rule2', page: '3', section: 'experiments', line: 10 },
-    { title: 'Rule2', page: '4', section: 'experiments', line: 10 },
-    { title: 'Rule4', page: '5', section: 'conclusion', line: 10 },
-    { title: 'Rule3', page: '2', section: 'conclusion', line: 10 },
-    { title: 'Rule5', page: '10', section: 'conclusion', line: 10 },
-    { title: 'Rule1', page: '2', section: 'conclusion', line: 10 },
-  ]
+  const dispatch = useDispatch();
+  const ruleViolations = useSelector((state)=> state.file.ruleViolations);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const rulesNotFiltred = ruleViolations[0].data.map(item =>({
+    title: item.message
+  }))
+  const uniqueRules = [];
+  const uniqueTitles = [];
+  
+  rulesNotFiltred.forEach(obj => {
+    const title = obj.title;
+    if (!uniqueTitles.includes(title)) {
+        uniqueTitles.push(title);
+        uniqueRules.push(obj);
+    }
+});
+  const rules = rulesFul.filter(item => uniqueRules.some(i => i.title === item.title));
+  const hashCode = (inputString) => {
+    let hashValue = 0;
+    for (let i = 0; i < inputString.length; i++) {
+      hashValue += inputString.charCodeAt(i);
+    }
+    return hashValue;
+  };
+  const targetArray = ruleViolations[0].data.map(item => ({
+    title: item.message,
+    page: item.lines[0].page,
+    section: item.lines[0].area,
+    line: item.lines[0].index,
+    id: hashCode(`${item.message}-${item.lines[0].page}-${item.lines[0].index}`),
+  }));
 
   const options = ['title', 'page', 'section']
 
@@ -34,7 +48,7 @@ const RuleViolationsContent = () => {
   const [selectedSort, setSelectedSort] = useState('')
 
   const selectedRuleViolations = useMemo(() => {
-     return ruleViolations
+     return targetArray
      .filter(r => selectedRules.includes(r["title"]))
   }, [selectedRules]
   );
@@ -73,7 +87,8 @@ const RuleViolationsContent = () => {
 
           {selectedSort === '' ? <List withPadding spacing="xs" >
             {selectedRuleViolations
-            .map(v => <List.Item>{v.title} {v.page} {v.section}</List.Item>)}
+            .map(v => <List.Item  onClick={()=>{dispatch(setCurrentLine(v.line));
+              dispatch(setCurrentPage(v.page));   setSelectedItemId(v.id);}}  className={selectedItemId === v.id? 'selected-item' : ''}>{v.title}</List.Item>)}
           </List> :
             <RuleViolationList
               violations={selectedRuleViolations}

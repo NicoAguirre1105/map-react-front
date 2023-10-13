@@ -1,51 +1,64 @@
-import { Checkbox, Input, Button } from '@mantine/core';
+import { Button, Input, Badge, Paper } from '@mantine/core';
 import { useState } from 'react';
-
+import { rulesFul } from '../../rules';
+import './RuleForm.css'
+import { useDispatch } from 'react-redux';
 const RuleForm = ({ create }) => {
-
   const [preset, setPreset] = useState({
     title: '',
-    rule1: false,
-    rule2: false,
-    rele3: false
-  })
-
-  /**Тут ещё не добавлено тело конфигурации*/
+    rules: [],
+    body: []
+  });
   const savePreset = (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    const ruleTitles = preset.rules.map((rule) => rule.title);
     const newPreset = {
       id: Date.now(),
-      ...preset
-    }
-    create(newPreset)
+      title: preset.title,
+      rules: preset.rules,
+      body: ruleTitles
+    };
+    create(newPreset);
     setPreset({
       title: '',
-      rule1: false,
-      rule2: false,
-      rele3: false
-    })
-  }
+      rules: [],
+      body: []
+    });
+  };
+
+  const handleRuleChange = (rule) => {
+    const updatedRules = preset.rules.includes(rule)
+      ? preset.rules.filter((selectedRule) => selectedRule !== rule)
+      : [...preset.rules, rule];
+
+    setPreset({
+      ...preset,
+      rules: updatedRules
+    });
+  };
 
   return (
     <form>
-      <div>{preset.title}</div>
-      <Input placeholder="Rules preset name"
+      <Input
+        placeholder="Rules preset name"
         size="md"
         value={preset.title}
-        onChange={event => setPreset({ ...preset, title: event.target.value })}
+        onChange={(event) => setPreset({ ...preset, title: event.target.value })}
       />
+  
+      <div className="rules-container">
+        {rulesFul.map((rule) => (
+          <Paper padding="md" className={preset.rules.includes(rule) ? 'rule-selected' : null} onClick={() => handleRuleChange(rule)} key={rule.title}>
+            {rule.title}
+          </Paper>
+        ))}
+      </div>
 
-      <Checkbox.Group label="Rules">
-        <Checkbox color="violet" value="rule1" label="Rules1"/>
-        <Checkbox color="violet" value="rule2" label="Rules2"/>
-        <Checkbox color="violet" value="rule3" label="Rules3"/>
-      </Checkbox.Group>
-
-      <Button onClick={savePreset} color="violet" size="md" id="presetButton">Save</Button>
+      <Button onClick={savePreset} color="violet" size="md" id="presetButton">
+        Save
+      </Button>
     </form>
   );
 };
 
 export default RuleForm;
-
-
