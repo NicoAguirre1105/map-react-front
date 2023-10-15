@@ -1,4 +1,7 @@
 .selected-item {
-    background-color: yellow; 
+  background-color: #a20dc7;
+  color: white;
     cursor: pointer; 
+    border-radius: 5px;
+    
   }

@@ -1,14 +1,15 @@
-import { Button, Input, Badge, Paper } from '@mantine/core';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Button, Input, Paper, Tooltip, Checkbox } from '@mantine/core'; // Import Checkbox component
 import { rulesFul } from '../../rules';
-import './RuleForm.css'
-import { useDispatch } from 'react-redux';
+import './RuleForm.css';
+
 const RuleForm = ({ create }) => {
   const [preset, setPreset] = useState({
     title: '',
     rules: [],
-    body: []
+    body: [],
   });
+
   const savePreset = (event) => {
     event.preventDefault();
     const ruleTitles = preset.rules.map((rule) => rule.title);
@@ -16,13 +17,13 @@ const RuleForm = ({ create }) => {
       id: Date.now(),
       title: preset.title,
       rules: preset.rules,
-      body: ruleTitles
+      body: ruleTitles,
     };
     create(newPreset);
     setPreset({
       title: '',
       rules: [],
-      body: []
+      body: [],
     });
   };
 
@@ -33,7 +34,7 @@ const RuleForm = ({ create }) => {
 
     setPreset({
       ...preset,
-      rules: updatedRules
+      rules: updatedRules,
     });
   };
 
@@ -45,12 +46,25 @@ const RuleForm = ({ create }) => {
         value={preset.title}
         onChange={(event) => setPreset({ ...preset, title: event.target.value })}
       />
-  
+
       <div className="rules-container">
         {rulesFul.map((rule) => (
-          <Paper padding="md" className={preset.rules.includes(rule) ? 'rule-selected' : null} onClick={() => handleRuleChange(rule)} key={rule.title}>
-            {rule.title}
-          </Paper>
+          <Tooltip
+            label={rule.description}
+            position="right"
+            openDelay={500}
+            multiline
+            w={220}
+            key={rule.title}
+          >
+            <label>
+              <Checkbox
+                checked={preset.rules.includes(rule)}
+                onChange={() => handleRuleChange(rule)}
+                label={rule.title}
+              />
+            </label>
+          </Tooltip>
         ))}
       </div>
 

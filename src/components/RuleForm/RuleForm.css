@@ -3,13 +3,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 10px;
-    width: 300px;
+    width: 400px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
   
-  .rule-selected {
-    background-color: #a20dc7;
-    color: white;
-    cursor: pointer;
-  }

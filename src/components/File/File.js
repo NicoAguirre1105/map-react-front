@@ -65,7 +65,7 @@ const File = ({ file, remove, index }) => {
             </div>
           )
         ) : (
-          <button onClick={handleButtonClick}>Загрузить PDF и получить результат</button>
+          <Button className="fileButton" onClick={handleButtonClick}>Загрузить PDF и получить результат</Button>
         )}
       </div>
       <div className="filesButtons">
