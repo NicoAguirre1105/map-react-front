@@ -4,14 +4,17 @@
 }
 
 .page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    text-align: end;
+    margin: 0;
+    width: calc(180px + 495 * (100vw / 1280)) 
+}
+.settings {
+    display: none;
     margin: 0;
 }
 .selected-item {
-    background-color: yellow; /* Любой цвет выделения, который вы хотите использовать */
-    cursor: pointer; /* Опционально: меняем курсор при наведении */
+    background-color: #a20dc7; 
+    cursor: pointer; 
   }
 .ruleViolations {
     display: flex;

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { List } from '@mantine/core';
+import { List, ScrollArea } from '@mantine/core';
 import RuleViolationList from '../RuleViolationList/RuleViolationsList';
 import RuleSelect from '../RuleSelect/RuleSelect';
 import RuleList from '../RuleList/RuleList';
@@ -27,19 +27,16 @@ const RuleViolationsContent = () => {
     }
 });
   const rules = rulesFul.filter(item => uniqueRules.some(i => i.title === item.title));
-  const hashCode = (inputString) => {
-    let hashValue = 0;
-    for (let i = 0; i < inputString.length; i++) {
-      hashValue += inputString.charCodeAt(i);
-    }
-    return hashValue;
-  };
   const targetArray = ruleViolations[0].data.map(item => ({
     title: item.message,
     page: item.lines[0].page,
     section: item.lines[0].area,
     line: item.lines[0].index,
-    id: hashCode(`${item.message}-${item.lines[0].page}-${item.lines[0].index}`),
+    id: JSON.stringify({
+      title: item.message,
+      page: item.lines[0].page,
+      line: item.lines[0].index
+    }),
   }));
 
   const options = ['title', 'page', 'section']
@@ -86,9 +83,11 @@ const RuleViolationsContent = () => {
             defaultValue={options[0]} />
 
           {selectedSort === '' ? <List withPadding spacing="xs" >
+          <ScrollArea h={560} type="never" offsetScrollbars scrollbarSize={8} scrollHideDelay={0}>
             {selectedRuleViolations
             .map(v => <List.Item  onClick={()=>{dispatch(setCurrentLine(v.line));
               dispatch(setCurrentPage(v.page));   setSelectedItemId(v.id);}}  className={selectedItemId === v.id? 'selected-item' : ''}>{v.title}</List.Item>)}
+              </ScrollArea>
           </List> :
             <RuleViolationList
               violations={selectedRuleViolations}

@@ -59,9 +59,9 @@ const RuleViolationsHeader = ({ tabs }) => {
             <RuleViolationsContent/>
           </Tabs.Panel>
 
-          {/*<Tabs.Panel value="Statistics">
+          <Tabs.Panel value="Statistics">
             <Statistics/>
-        </Tabs.Panel>*/}
+        </Tabs.Panel>
 
         </Tabs>
       </Container>

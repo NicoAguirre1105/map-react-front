@@ -37,9 +37,7 @@
 
 .listButtons {
   display: flex;
-  justify-content: end;
-  margin: 10px;
-  width: 400px
+  justify-content: space-between;
 }
 
 .listButton {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox, List } from '@mantine/core';
 import { Collapse, Button } from '@mantine/core';
-
+import './Rule.css'
 const Rule = ({ rule }) => {
   const [isOpen, setIsOpen] = useState(false);
 

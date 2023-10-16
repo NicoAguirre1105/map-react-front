@@ -5,3 +5,10 @@
     border-radius: 5px;
     
   }
+  .ruleViolationItem {
+    border-color: #e9e7e7;
+    border-radius: 15px;
+    border-style: solid; 
+    margin: 3px;
+    padding: 5px;
+}

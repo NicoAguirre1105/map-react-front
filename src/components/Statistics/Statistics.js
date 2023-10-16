@@ -1,22 +1,45 @@
-import React, { useMemo } from 'react';
-import { Title, RingProgress, ColorSwatch, Group, Text } from '@mantine/core';
 import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import axios from 'axios'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { Title, RingProgress, ColorSwatch, Group, Text, ScrollArea, Col, Row } from '@mantine/core';
 import './Statistics.css'
+const Statistics = () => {
+  const [wordData, setWordData] = useState([]);
+  const [pageData, setPageData] = useState([]);
+  const [wordCount, setWordCount] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+  const currentFileName = useSelector((state) => state.file.currentFileName);
+  const colors = ['#FF7F50', '#FFD700', '#40E0D0', '#FF69B4', '#7CFC00', '#FF1493', '#00CED1', '#FF8C00', '#8A2BE2', '#00FF00'];
 
-const data = [
-  { number: 1, word: 'Ford', count: 10 },
-  { number: 2, word: 'Piu', count: 12 },
-  { number: 3, word: 'Lorem', count: 5 },
-  { number: 4, word: 'Apple', count: 6 },
-  { number: 5, word: 'Cringe', count: 7 },
-  { number: 6, word: 'ops', count: 8 },
-  { number: 7, word: 'param', count: 13 },
-  { number: 8, word: 'pam', count: 14 },
-  { number: 9, word: 'sym', count: 16 },
-  { number: 10, word: 'flexible', count: 10 },
-];
+  useEffect(() => {
+    axios.get(`http://localhost:8081/api/viewPDFStatistic?pdfName=${currentFileName}`)
+      .then(res => {
+        const sortedWords = Object.entries(res.data.wordsStatistic.topKWords)
+            .sort((a, b) => b[1] - a[1]) 
+            .slice(0, 100)
+            .map(([word, count], index) => ({ number: index + 1, word, count }));
+        setWordData(sortedWords);
+        setWordCount(res.data.wordsStatistic.wordCount); 
 
-const Example = () => {
+        const pageResults = res.data.pageStatistic.sectionsStatistic.map(item => ({
+          title: item.section.title.replace(/^\d+\.\s*/, ''),
+          size: item.sectionSizeInPage
+        }));
+        const totalSize = pageResults.reduce((sum, item) => sum + item.size, 0);
+        const resultsWithPercentage = pageResults.map(item => ({ 
+          ...item,
+          sizePercentage: (item.size / totalSize) * 100
+        }));
+        setPageCount(res.data.pageStatistic.sectionsStatistic[0].documentSize);
+        setPageData(resultsWithPercentage);
+        
+      })
+      .catch(err => {
+        console.error('Error:', err);
+      });
+  }, [currentFileName]); 
+
   const columns = useMemo(
     () => [
       {
@@ -34,59 +57,36 @@ const Example = () => {
     ],
     [],
   );
-
   const table = useMantineReactTable({
     columns,
-    data,
+    data: wordData, 
   });
 
-  return <MantineReactTable table={table} />;
+  return (
+    <div className="statistics">
+      <Title className="title">Words statistics</Title>
+      <Text color="dimmed">{wordCount} words</Text>
+      <MantineReactTable table={table} />
+
+      <Title className="title">Pages statistics</Title>
+      <Text color="dimmed">{pageCount} pages</Text>
+      <div className="diagramWithTitles">
+  <RingProgress
+    size={400}
+    thickness={70}
+    sections={pageData.map((item, index) => ({ value: item.sizePercentage, color: colors[index % colors.length] }))}
+  />
+  <ul className="sectionsList">
+    {pageData.map((item, index) => (
+      <li key={index} className="section">
+        <ColorSwatch className="swatch" color={colors[index % colors.length]} />
+        <Text>{item.title}</Text>
+      </li>
+    ))}
+  </ul>
+</div>
+    </div>
+  );
 };
 
-
-const Statistics = () => {
-  
-
-    return (
-        <div className="statistics">
-            <Title className="title">Words statistics</Title>
-            <Text color="dimmed">1573 words</Text>
-            <Example/>
-
-            <Title className="title">Pages statistics</Title>
-            <Text color="dimmed">15 pages</Text>
-
-            <div className="pageStatisticsContent">
-                <RingProgress
-                    size={400}
-                    thickness={70}
-                    sections={[
-                        { value: 15, color: 'red' },
-                        { value: 40, color: 'cyan' },
-                        { value: 15, color: 'yellow' },
-                        { value: 30, color: 'grape' },
-                    ]}
-                />
-
-                <Group className="sectionsList">
-                    <div className="section">
-                        <ColorSwatch className="swatch" color="#fab005" /><Text>Introduction</Text>
-                    </div>
-                    <div className="section">
-                        <ColorSwatch className="swatch" color="#fa5252" /><Text>Table of content</Text>
-                    </div>
-                    <div className="section">
-                        <ColorSwatch className="swatch" color="#be4bdb" /><Text>Section</Text>
-                    </div>
-                    <div className="section">
-                        <ColorSwatch className="swatch" color="#15aabf" /><Text>Conclusion</Text>
-                    </div>
-                </Group>
-
-            </div>
-
-        </div>
-    )
-}
-
-export default Statistics
+export default Statistics;
