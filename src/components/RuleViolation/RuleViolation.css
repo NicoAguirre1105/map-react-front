@@ -1,3 +1,11 @@
+.selected-item {
+  background-color: #a20dc7;
+  color: white;
+    cursor: pointer; 
+    border-radius: 5px;
+    
+  }
+  
 .ruleViolationItem {
     border-color: #e9e7e7;
     border-radius: 15px;

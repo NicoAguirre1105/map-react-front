@@ -3,7 +3,7 @@ import RuleViolationsHeader from '../components/RuleViolationsHeader/RuleViolati
 import '../css/processfile.css'
 
 const ProcessFile = () => {
-    const tabs = ['Violations'] /**add 'Statistics' */
+    const tabs = ['Violations','Statistics'] /**add 'Statistics' */
 
     return(
         <div className="ruleViolationsHeader">

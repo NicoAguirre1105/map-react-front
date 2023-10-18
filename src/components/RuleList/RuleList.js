@@ -1,11 +1,12 @@
 import React from 'react';
 import { Checkbox, Accordion, Group } from '@mantine/core';
 import Rule from '../Rule/Rule.js';
-import './RuleList.css'
+import './RuleList.css';
 
 const RuleList = ({ rules, value, onChange, visibility }) => {
   return (
-    <div className="rulesList" style={{ visibility: visibility }}>
+    <div className="rulesList" style={{ visibility: visibility, maxHeight: '600px', overflowY: 'auto', scrollbarWidth: '0' }}>
+
       <Accordion
         color="violet"
         variant="filled"
@@ -28,7 +29,7 @@ const RuleList = ({ rules, value, onChange, visibility }) => {
         </Accordion.Item>
       </Accordion>
     </div>
-  )
-}
+  );
+};
 
-export default RuleList
+export default RuleList;

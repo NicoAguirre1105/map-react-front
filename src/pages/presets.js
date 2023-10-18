@@ -9,10 +9,13 @@ import ListContainer from '../components/ListContainer/ListContainer';
 
 const Presets = () => {
     const [presets, setPresets] = useState([
-        { id: 0, title: 'Rules1', body: 'configuration3' },
-        { id: 1, title: 'abcd2', body: 'configuration2' },
-        { id: 2, title: 'Rules3', body: 'configuration1' }
+        [
+            { id: 0, title: "Rles1222", body: ["configuration3","lol"] },
+            { id: 1, title: "abcd2ddddd", body: ["configuration2","lol"] },
+            { id: 2, title: "Rules3", body: ["configuration1","lol"] }
+          ]
     ])
+
 
     useEffect(() => {
         if (localStorage.getItem('presets'))
@@ -23,7 +26,10 @@ const Presets = () => {
     const [searchQuery, setSearchQuery] = useState('')
 
     const selectedPresets = useMemo(() => {
-        return presets.filter(preset => preset.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        return presets.filter((preset) => {if (preset && preset.title) {
+            return preset.title.toLowerCase().includes(searchQuery.toLowerCase());
+          }
+          return false;})
     }, [searchQuery, presets])
 
     const createPreset = (newPreset) => {

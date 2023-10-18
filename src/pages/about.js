@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Group, Text, Button } from '@mantine/core';
 import { GithubIcon } from '@mantine/ds';
 import '../css/about.css'
-
 const About = () => {
   return (
     <div className='aboutPage'>

@@ -1,32 +1,45 @@
-
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { List, Accordion } from '@mantine/core';
+import { List, Accordion, ScrollArea } from '@mantine/core';
 import RuleViolationList from '../RuleViolationList/RuleViolationsList';
 import RuleSelect from '../RuleSelect/RuleSelect';
 import RuleList from '../RuleList/RuleList';
 import FileView from '../FileView/FileView';
+import { rulesFul } from '../../rules';
 import './RuleViolationsContent.css'
+import { useDispatch } from 'react-redux';
+import { setCurrentLine,setCurrentPage} from '../../actions/fileAction';
 
 const RuleViolationsContent = () => {
-  const rules = [
-    { title: 'Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1Rule1', type: 'warning', body: 'description' },
-    { title: 'Rule2', type: 'warning', body: 'description' },
-    { title: 'Rule3', type: 'error', body: 'description' },
-    { title: 'Rule4', type: 'error', body: 'description' },
-    { title: 'Rule5', type: 'error', body: 'description' },
-  ]
 
-  const ruleViolations = [
-    { title: 'Rule1', page: '1',  line: 10 },
-    { title: 'Rule1', page: '2',  line: 10 },
-    { title: 'Rule2', page: '3', line: 10 },
-    { title: 'Rule2', page: '4', line: 10 },
-    { title: 'Rule4', page: '5', line: 10 },
-    { title: 'Rule3', page: '2', line: 10 },
-    { title: 'Rule5', page: '10',line: 10 },
-    { title: 'Rule1', page: '2', line: 10 },
-  ]
+  const dispatch = useDispatch();
+  const ruleViolations = useSelector((state)=> state.file.ruleViolations);
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const rulesNotFiltred = ruleViolations[0].data.map(item =>({
+    title: item.message
+  }))
+  const uniqueRules = [];
+  const uniqueTitles = [];
+  
+  rulesNotFiltred.forEach(obj => {
+    const title = obj.title;
+    if (!uniqueTitles.includes(title)) {
+        uniqueTitles.push(title);
+        uniqueRules.push(obj);
+    }
+});
+  const rules = rulesFul.filter(item => uniqueRules.some(i => i.title === item.title));
+  const targetArray = ruleViolations[0].data.map(item => ({
+    title: item.message,
+    page: item.lines[0].page,
+    section: item.lines[0].area,
+    line: item.lines[0].index,
+    id: JSON.stringify({
+      title: item.message,
+      page: item.lines[0].page,
+      line: item.lines[0].index
+    }),
+  }));
 
   const options = ['title', 'page']
 
@@ -34,7 +47,7 @@ const RuleViolationsContent = () => {
   const [selectedSort, setSelectedSort] = useState('')
 
   const selectedRuleViolations = useMemo(() => {
-     return ruleViolations
+     return targetArray
      .filter(r => selectedRules.includes(r["title"]))
   }, [selectedRules]
   );
@@ -57,28 +70,26 @@ const RuleViolationsContent = () => {
   if (currentFile != null) {
     return (
       <div className="main">
-        <div className='ruleList'>
-          <RuleList
-            value={selectedRules}
-            onChange={setSelectedRules}
-            rules={rules}
-          />
+      
+       <div className='ruleList'>
+          <RuleList 
+          value={selectedRules} 
+          onChange={setSelectedRules}
+          rules={rules}/>
         </div>
-
+          
         <div className='pageWithSort'>
+          
+        <div className="page"><FileView/></div>
 
-          <div className="page">
-            <FileView/>
-          </div>
+        <div className="sortedRuleViolationsList">
+          <RuleSelect
+            value={selectedSort}
+            onChange={setSelectedSort}
+            options={[...options]}
+            defaultValue={options[0]} />
 
-          <div className="sortedRuleViolationsList">
-            <RuleSelect
-              value={selectedSort}
-              onChange={setSelectedSort}
-              options={[...options]}
-              defaultValue={options[0]}/>
-
-            <Accordion
+           <Accordion
               color="violet"
               variant="filled"
               chevronPosition="left"
@@ -86,19 +97,23 @@ const RuleViolationsContent = () => {
               <Accordion.Item value="customization">
                 <Accordion.Control>Rule Violations</Accordion.Control>
                 <Accordion.Panel>
-                {selectedSort === '' ? <List withPadding spacing="xs" >
-                  {selectedRuleViolations
-                    .map(v => <List.Item className="ruleViolationItem">{v.title} {v.page} {v.section}</List.Item>)}
-                </List> :
-                  <RuleViolationList
-                    violations={selectedRuleViolations}
-                    categories={categories}
-                    categoryName={selectedSort}
-                  />
-                }
+          {selectedSort === '' ? <List withPadding spacing="xs" >
+          <ScrollArea h={560} type="never" offsetScrollbars scrollbarSize={8} scrollHideDelay={0}>
+            {selectedRuleViolations
+            .map(v => <List.Item  onClick={()=>{dispatch(setCurrentLine(v.line));
+              dispatch(setCurrentPage(v.page));   setSelectedItemId(v.id);}}  className={selectedItemId === v.id? 'selected-item' : ''}>{v.title}</List.Item>)}
+              </ScrollArea>
+          </List> :
+            <RuleViolationList
+              violations={selectedRuleViolations}
+              categories={categories}
+              categoryName={selectedSort}
+            />
+          }
               </Accordion.Panel>
               </Accordion.Item>
             </Accordion>
+
           </div>
         </div>
       </div>

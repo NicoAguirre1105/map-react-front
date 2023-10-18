@@ -1,4 +1,4 @@
-import { UPLOAD_FILE, VIEW_FILE,RESET_VARIABLE } from './actionTypes';
+import { UPLOAD_FILE, VIEW_FILE,RESET_VARIABLE,SET_CURRENT_PAGE, SET_CURRENT_LINE, SET_CURRENT_FILE_NAME,GET_RULE_VIOLATIONS,SET_SELECTED_ITEM,SET_CURRENT_PRESET} from './actionTypes';
 
 export const uploadFile = (file) => (dispatch) => {
   const reader = new FileReader();
@@ -25,6 +25,54 @@ export const viewFile = (file) => (dispatch) => {
     },
   });
 };
+export const setCurrentPage = (currentPage) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_PAGE,
+    payload: {
+      data: currentPage,
+    },
+  });
+};
+export const setCurrentLine = (currentLine) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_LINE,
+    payload: {
+      data: currentLine,
+    },
+  });
+};
+export const setCurrentFileName = (currentFileName) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_FILE_NAME,
+    payload: {
+      data: currentFileName,
+    },
+  });
+};
+export const setRuleViolations = (ruleViolations) => (dispatch)=>{
+  dispatch({
+    type:GET_RULE_VIOLATIONS,
+    payload:{
+      data:ruleViolations
+    }
+  })
+}
+export const setCurrentPreset = (currentPreset) => (dispatch)=>{
+  dispatch({
+    type:SET_CURRENT_PRESET,
+    payload:{
+      data:currentPreset
+    }
+  })
+}
+export const setSelectedItem = (selectedItem) => (dispatch) =>{
+  dispatch({
+    type:SET_SELECTED_ITEM,
+    payload:{
+      data:selectedItem
+    }
+  })
+}
 export const resetVariable = () => ({
   type: RESET_VARIABLE,
 });

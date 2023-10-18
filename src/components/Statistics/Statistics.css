@@ -1,28 +1,21 @@
-
-.statistics {
+.diagramWithTitles {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 1000px;
-}
-
-.title {
-    margin-top: 30px;
+    align-items: flex-start;
+    margin-top: 16px;
+  }
+  
+  .sectionsList {
+    padding-left: 16px;
+    list-style-type: disc;
+  }
+  
+  .section {
     display: flex;
-    width: 500px;
-}
-.pageStatisticsContent {
-    display: flex;
-}
-.sectionsList {
-    display: inline;
-    margin-top: 70px;
-}
-
-.section {
-    display: flex;
-    margin: 10px;
-}
-.swatch {
-    margin-right: 10px;
-}
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .swatch {
+    margin-right: 8px;
+    min-width: 25px;
+  }
