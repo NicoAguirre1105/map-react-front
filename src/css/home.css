@@ -6,16 +6,25 @@
   text-align: center;
 }
 
+
+.name>br {
+  display: none;
+}
+
 .name {
   font-size: 60px;
 }
 
 .description {
   display: inline-block;
-  width: 600px;
+  max-width: 600px;
   font-size: 1.5rem;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.description>br{
+  display: none;
 }
 
 .mantine-Group-root {
@@ -55,4 +64,26 @@
   position: absolute;
   top: 50px;
   left: 50px;
+}
+
+@media (max-width: 1400px) {
+  .papers {
+    display: none;
+  }
+
+  .name {
+    font-size: calc(16px + 44 * (100vw / 1280));
+  }
+
+  .name>br {
+    display: initial;
+  }
+
+  .description {
+    font-size: calc(16px + 4 * (100vw / 1280));
+  }
+
+  .description>br {
+    display: initial;
+  }
 }

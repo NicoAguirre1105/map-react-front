@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { List, ScrollArea } from '@mantine/core';
+import { List, Accordion, ScrollArea } from '@mantine/core';
 import RuleViolationList from '../RuleViolationList/RuleViolationsList';
 import RuleSelect from '../RuleSelect/RuleSelect';
 import RuleList from '../RuleList/RuleList';
@@ -9,7 +9,9 @@ import { rulesFul } from '../../rules';
 import './RuleViolationsContent.css'
 import { useDispatch } from 'react-redux';
 import { setCurrentLine,setCurrentPage} from '../../actions/fileAction';
+
 const RuleViolationsContent = () => {
+
   const dispatch = useDispatch();
   const ruleViolations = useSelector((state)=> state.file.ruleViolations);
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -39,9 +41,9 @@ const RuleViolationsContent = () => {
     }),
   }));
 
-  const options = ['title', 'page', 'section']
+  const options = ['title', 'page']
 
-  const [selectedRules, setSelectedRules] = useState([])
+  const [selectedRules, setSelectedRules] = useState([...rules].map(r => r.title))
   const [selectedSort, setSelectedSort] = useState('')
 
   const selectedRuleViolations = useMemo(() => {
@@ -68,11 +70,16 @@ const RuleViolationsContent = () => {
   if (currentFile != null) {
     return (
       <div className="main">
+      
+       <div className='ruleList'>
           <RuleList 
           value={selectedRules} 
           onChange={setSelectedRules}
           rules={rules}/>
-
+        </div>
+          
+        <div className='pageWithSort'>
+          
         <div className="page"><FileView/></div>
 
         <div className="sortedRuleViolationsList">
@@ -82,6 +89,14 @@ const RuleViolationsContent = () => {
             options={[...options]}
             defaultValue={options[0]} />
 
+           <Accordion
+              color="violet"
+              variant="filled"
+              chevronPosition="left"
+              defaultValue="customization">
+              <Accordion.Item value="customization">
+                <Accordion.Control>Rule Violations</Accordion.Control>
+                <Accordion.Panel>
           {selectedSort === '' ? <List withPadding spacing="xs" >
           <ScrollArea h={560} type="never" offsetScrollbars scrollbarSize={8} scrollHideDelay={0}>
             {selectedRuleViolations
@@ -95,6 +110,11 @@ const RuleViolationsContent = () => {
               categoryName={selectedSort}
             />
           }
+              </Accordion.Panel>
+              </Accordion.Item>
+            </Accordion>
+
+          </div>
         </div>
       </div>
     )

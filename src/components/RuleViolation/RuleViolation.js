@@ -33,6 +33,7 @@ function RuleViolation({ categoryName, category, violations }) {
               ))}
           </List>
         </div>
+
       </Accordion.Panel>
     </Accordion.Item>
   );

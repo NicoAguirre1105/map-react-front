@@ -41,7 +41,7 @@ function FileView() {
     setNumPages(numPages);
   };
   return (
-    <div>
+    <div  className="filePage">
       {pdfData || currentPage ?  (        
         <div>
           <Document
@@ -60,6 +60,7 @@ function FileView() {
         <Page renderAnnotationLayer={false} renderTextLayer={false} wrap={true} pageNumber={1} />
       </Document>
   </div>
+
       )}
     </div>
   );

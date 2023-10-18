@@ -3,6 +3,7 @@
     display: flex;
     justify-content: center;
 }
+
 @media (max-width: 1400px) {
     .ruleViolationsHeader{
         margin-top: 20px;

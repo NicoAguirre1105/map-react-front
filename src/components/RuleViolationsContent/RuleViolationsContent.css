@@ -23,16 +23,40 @@
     max-width: 1000px;
 }
 
-.ruleViolationsHeader {
-    display: flex;
-    min-width: 1000px;
-    padding-bottom: 25px;
-
-}
-
 .sortedRuleViolationsList {
     display: flex;
     flex-direction: column;
     margin-top: 30px;
     min-width: 400px;
+    margin-left: calc(10px + 20 * (100vw / 1280));
+}
+.sortWithIcon {
+    display: flex;
+}
+
+.saveButton{
+    display: flex;
+    justify-content: end;
+}
+.ruleList{
+    display: initial;
+}
+
+.pageWithSort {
+    display: flex;
+    flex-direction: row;
+}
+@media (max-width: 1400px) {
+    .settings {
+      display: initial;
+    }
+    .pageWithSort {
+        flex-direction: column-reverse;
+    }
+    .main {
+        display: inline-block;
+    }
+    .sortedRuleViolationsList {
+        min-width: 200px;
+    }
 }

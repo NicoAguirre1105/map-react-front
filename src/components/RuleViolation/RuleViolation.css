@@ -5,7 +5,8 @@
     border-radius: 5px;
     
   }
-  .ruleViolationItem {
+  
+.ruleViolationItem {
     border-color: #e9e7e7;
     border-radius: 15px;
     border-style: solid; 
