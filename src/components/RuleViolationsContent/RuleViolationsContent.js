@@ -15,9 +15,9 @@ const RuleViolationsContent = () => {
   const dispatch = useDispatch();
   const ruleViolations = useSelector((state)=> state.file.ruleViolations);
   const [selectedItemId, setSelectedItemId] = useState(null);
-  const rulesNotFiltred = ruleViolations[0].data.map(item =>({
+  const rulesNotFiltred = (ruleViolations.length > 0) ? ruleViolations[0].data.map(item =>({
     title: item.message
-  }))
+  })) : []
   const uniqueRules = [];
   const uniqueTitles = [];
   
@@ -29,7 +29,7 @@ const RuleViolationsContent = () => {
     }
 });
   const rules = rulesFul.filter(item => uniqueRules.some(i => i.title === item.title));
-  const targetArray = ruleViolations[0].data.map(item => ({
+  const targetArray = (ruleViolations.length > 0) ? ruleViolations[0].data.map(item => ({
     title: item.message,
     page: item.lines[0].page,
     section: item.lines[0].area,
@@ -37,9 +37,9 @@ const RuleViolationsContent = () => {
     id: JSON.stringify({
       title: item.message,
       page: item.lines[0].page,
-      line: item.lines[0].index
+      line: item.lines[0].index,
     }),
-  }));
+  })) : [];
 
   const options = ['title', 'page']
 

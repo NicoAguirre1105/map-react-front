@@ -1,76 +1,91 @@
 import React, { useState } from 'react';
-import { Button, Input, Paper, Tooltip, Checkbox } from '@mantine/core'; // Import Checkbox component
+import { useForm } from '@mantine/form';
+import { Button, TextInput, Text, ScrollArea, Checkbox, Group, Accordion } from '@mantine/core';
 import { rulesFul } from '../../rules';
 import './RuleForm.css';
 
 const RuleForm = ({ create }) => {
-  const [preset, setPreset] = useState({
-    title: '',
-    rules: [],
-    body: [],
+
+  const formRules = []
+  rulesFul.map(rule => {
+    const curRule = {
+      title: `${rule.title}`,
+      checked: false
+    }
+    formRules.push(curRule)
+  }
+  )
+  const form = useForm({
+    initialValues: {
+      title: '',
+      rules: formRules
+    },
+
+    validate: {
+      title: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+    },
   });
 
-  const savePreset = (event) => {
-    event.preventDefault();
-    const ruleTitles = preset.rules.map((rule) => rule.title);
+  const [preset, setPreset] = useState({
+    id: Date.now(),
+    title: '',
+    rules: [],
+  });
+
+  const savePreset = ({ title, rules }) => {
+    const ruleTitles = rules.filter(rule => rule.checked === true).map(rule => rule.title);
     const newPreset = {
       id: Date.now(),
-      title: preset.title,
-      rules: preset.rules,
-      body: ruleTitles,
+      title: title,
+      rules: ruleTitles,
     };
+
     create(newPreset);
     setPreset({
+      id: Date.now(),
       title: '',
       rules: [],
-      body: [],
-    });
-  };
-
-  const handleRuleChange = (rule) => {
-    const updatedRules = preset.rules.includes(rule)
-      ? preset.rules.filter((selectedRule) => selectedRule !== rule)
-      : [...preset.rules, rule];
-
-    setPreset({
-      ...preset,
-      rules: updatedRules,
     });
   };
 
   return (
-    <form>
-      <Input
+    <form onSubmit={form.onSubmit(values => savePreset(values))}>
+      <TextInput
         placeholder="Rules preset name"
         size="md"
-        value={preset.title}
-        onChange={(event) => setPreset({ ...preset, title: event.target.value })}
+        {...form.getInputProps('title')}
       />
 
       <div className="rules-container">
-        {rulesFul.map((rule) => (
-          <Tooltip
-            label={rule.description}
-            position="right"
-            openDelay={500}
-            multiline
-            w={220}
-            key={rule.title}
-          >
-            <label>
-              <Checkbox
-                checked={preset.rules.includes(rule)}
-                onChange={() => handleRuleChange(rule)}
-                label={rule.title}
-              />
-            </label>
-          </Tooltip>
+      <ScrollArea h={550} offsetScrollbars scrollbarSize={4}>
+      <Accordion style={{width: 'calc(180px + 495 * (100vw / 1280))'}}variant="contained">
+        {rulesFul.map((rule, index) => (
+              <Accordion.Item
+                value={"id" + index}
+                >
+                <Accordion.Control>
+                  <Checkbox
+                    color='violet'
+                    {...form.getInputProps(`rules.${index}.checked`, { type: 'checkbox' })}
+                    label={rule.title}
+                    value={"id" + index}
+                  />
+                </Accordion.Control>
+
+                <Accordion.Panel >
+                    <Text color="dimmed">{rule.description} </Text>
+                </Accordion.Panel>
+              </Accordion.Item>
         ))}
+         </Accordion>
+         </ScrollArea>
       </div>
 
-      <Button onClick={savePreset} color="violet" size="md" id="presetButton">
-        Save
-      </Button>
+      <Group justify="flex-end" mt="md">
+        <Button type="submit" color="violet" size="md" id="presetButton">
+          Save
+        </Button>
+      </Group>
     </form>
   );
 };

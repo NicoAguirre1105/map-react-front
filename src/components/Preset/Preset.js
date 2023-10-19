@@ -26,16 +26,14 @@ const Preset = ({ preset, visible }) => {
                 />
             </Accordion.Control>
 
-            <Accordion.Panel style={{ maxHeight: '200px' }}>
+            <Accordion.Panel >
                 <Title color="dimmed"
                     order={4}>Rules
                 </Title>
 
-                <div style={{ overflowY: 'auto', maxHeight: '200px' }}>
-                    {preset.body.map((str, index) => (
-                        <Text color="dimmed">{str} </Text>
-                    ))}
-                </div>
+                {preset.rules.map((str) => (
+                    <Text color="dimmed">{str} </Text>
+                ))}
 
             </Accordion.Panel>
         </Accordion.Item>

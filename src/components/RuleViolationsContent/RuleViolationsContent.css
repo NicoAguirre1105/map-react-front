@@ -1,6 +1,7 @@
 .main {
     display: flex;
     justify-content: center;
+    height: auto;
 }
 
 .page {

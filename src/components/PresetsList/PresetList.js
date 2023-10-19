@@ -6,13 +6,11 @@ const PresetList = ({ presets, visible }) => {
     return (
         <div className="presetsList" >
             <Accordion multiple variant="contained">
-            <ScrollArea h={850} type="never" offsetScrollbars scrollbarSize={8} scrollHideDelay={0}>
                 <Radio.Group>
                     {presets.map(preset => (
                         <Preset preset={preset} visible={visible} key={preset.id} />
                     ))}
                 </Radio.Group>
-                </ScrollArea>
             </Accordion>
         </div>
     );

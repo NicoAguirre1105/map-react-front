@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Document, Page, pdfjs } from 'react-pdf';
+import './FileView.css'
 
 function FileView() {
   const [pdfData, setPdfData] = useState(null);
@@ -43,7 +44,6 @@ function FileView() {
   return (
     <div  className="filePage">
       {pdfData || currentPage ?  (        
-        <div>
           <Document
             file={new Blob([pdfData], { type: 'application/pdf' })}
             onLoadSuccess={onDocumentLoadSuccess}
@@ -51,15 +51,14 @@ function FileView() {
             <Page renderAnnotationLayer={false} renderTextLayer={false} wrap={true} pageNumber={currentPage+1} />
           </Document>
           
-        </div>
       ) : (
-        <div> <Document
+       <Document
         file={new Blob([firstPagePdfData], { type: 'application/pdf' })}
         onLoadSuccess={onDocumentLoadSuccess}
       >
         <Page renderAnnotationLayer={false} renderTextLayer={false} wrap={true} pageNumber={1} />
       </Document>
-  </div>
+
 
       )}
     </div>
