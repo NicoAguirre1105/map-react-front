@@ -14,7 +14,7 @@
     margin: 0;
 }
 .selected-item {
-    background-color: #a20dc7; 
+    background-color: #7950f2; 
     cursor: pointer; 
   }
 .ruleViolations {
