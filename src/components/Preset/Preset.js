@@ -1,6 +1,6 @@
 import React from 'react';
 import { Radio } from '@mantine/core';
-import { Accordion, Text, Title } from '@mantine/core';
+import { Accordion, Text, Title, List } from '@mantine/core';
 import './Preset.css'
 import { setCurrentPreset } from '../../actions/fileAction';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,9 +31,11 @@ const Preset = ({ preset, visible }) => {
                     order={4}>Rules
                 </Title>
 
+                <List color="dimmed" withPadding>
                 {preset.rules.map((str) => (
                     <Text color="dimmed">{str} </Text>
                 ))}
+                </List>
 
             </Accordion.Panel>
         </Accordion.Item>

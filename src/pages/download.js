@@ -39,7 +39,7 @@ const Download = () => {
           onChange={handleFileChange}
           {...props}
           color="violet">
-          Upload Files
+          Add Files
         </Button>}
     </FileButton>
   ]
