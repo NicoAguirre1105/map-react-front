@@ -23,6 +23,7 @@ const RuleForm = ({ create }) => {
 
     validate: {
       title: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      rules: (value) => value.every(obj => obj.checked === false)
     },
   });
 
@@ -57,6 +58,7 @@ const RuleForm = ({ create }) => {
       />
 
       <div className="rules-container">
+        <Text color='dimmed'>Preset must not be empty</Text>
       <ScrollArea h={550} offsetScrollbars scrollbarSize={4}>
       <Accordion style={{width: 'calc(180px + 495 * (100vw / 1280))'}}variant="contained">
         {rulesFul.map((rule, index) => (

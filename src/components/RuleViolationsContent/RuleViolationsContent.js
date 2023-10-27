@@ -9,6 +9,10 @@ import { rulesFul } from '../../rules';
 import './RuleViolationsContent.css'
 import { useDispatch } from 'react-redux';
 import { setCurrentLine,setCurrentPage} from '../../actions/fileAction';
+import { ActionIcon } from '@mantine/core';
+import { IconAlertHexagon } from '@tabler/icons-react';
+import RuleModal from '../RuleModal/RuleModal'
+import FeedbackFrom from '../FeedbackForm/FeedbackForm';
 
 const RuleViolationsContent = () => {
 
@@ -66,6 +70,7 @@ const RuleViolationsContent = () => {
   }, [selectedSort, selectedRules])
 
   const currentFile = useSelector((state) => state.file.currentFile);
+  const [modal, setModal] = useState(false)
 
   if (currentFile != null) {
     return (
@@ -99,9 +104,23 @@ const RuleViolationsContent = () => {
                 <Accordion.Panel>
           {selectedSort === '' ? <List withPadding spacing="xs" >
           <ScrollArea h={560} type="never" offsetScrollbars scrollbarSize={8} scrollHideDelay={0}>
+            
             {selectedRuleViolations
-            .map(v => <List.Item  onClick={()=>{dispatch(setCurrentLine(v.line));
-              dispatch(setCurrentPage(v.page));   setSelectedItemId(v.id);}}  className={selectedItemId === v.id? 'selected-item' : ''}>{v.title}</List.Item>)}
+            .map(v => <List.Item  
+              onClick={()=>{dispatch(setCurrentLine(v.line));
+              dispatch(setCurrentPage(v.page));  
+               setSelectedItemId(v.id);}}  
+               className={selectedItemId === v.id? 'selected-item' : ''}
+                 icon ={ 
+                   <ActionIcon 
+                   style={{border: 'solid'}}
+                   size="xl" onClick={() => setModal(true)}>
+                     <IconAlertHexagon />
+                   </ActionIcon>
+                 }
+                 >
+                {v.title}
+                </List.Item>)}
               </ScrollArea>
           </List> :
             <RuleViolationList
@@ -116,6 +135,9 @@ const RuleViolationsContent = () => {
 
           </div>
         </div>
+        <RuleModal visible={modal} setVisible={setModal}>
+          <FeedbackFrom />
+        </RuleModal>
       </div>
     )
   }

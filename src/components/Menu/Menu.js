@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRef } from 'react';
 import { useHistory , useParams} from 'react-router-dom'
 import { Container, Tabs, createStyles, rem } from '@mantine/core';
 import '../../css/App.css';
@@ -29,7 +30,12 @@ const Menu = () => {
   const { tabValue } = useParams();
     return (
       <Container className="menu">
-        <Tabs color="violet" value={tabValue} onTabChange={(value) => navigateTo(`/${value}`)}>
+        <Tabs defaultValue={`${sessionStorage.getItem("tabs")}`} 
+        color="violet" 
+        value={tabValue}
+        onTabChange={(value) => {
+          sessionStorage.setItem("tabs", value);
+          navigateTo(`/${value}`)}}>
         <Tabs.List>
         <Tabs.Tab className={classes.mainLink} value="Home">HOME</Tabs.Tab>
           <Tabs.Tab className={classes.mainLink} value="About">ABOUT</Tabs.Tab>

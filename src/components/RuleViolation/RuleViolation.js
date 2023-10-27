@@ -1,12 +1,18 @@
-import React from 'react';
-import { List, Accordion } from '@mantine/core';
+import React, { useState } from 'react';
+import { List, Accordion, Text } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentLine, setCurrentPage, setSelectedItem} from '../../actions/fileAction';
+import { setCurrentLine, setCurrentPage, setSelectedItem } from '../../actions/fileAction';
 import './RuleViolation.css';
+import { ActionIcon } from '@mantine/core';
+import { IconAlertHexagon } from '@tabler/icons-react';
+import RuleModal from '../RuleModal/RuleModal'
+import FeedbackFrom from '../FeedbackForm/FeedbackForm';
 
 function RuleViolation({ categoryName, category, violations }) {
   const dispatch = useDispatch();
   const selectedItemId = useSelector((state) => state.file.selectedItem);
+
+  const [modal, setModal] = useState(false)
 
   return (
     <Accordion.Item value={categoryName + category}>
@@ -14,7 +20,8 @@ function RuleViolation({ categoryName, category, violations }) {
         {categoryName} {category}
       </Accordion.Control>
       <Accordion.Panel>
-        <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+
+        <Text style={{ maxHeight: '300px', overflowY: 'auto' }}>
           <List withPadding spacing="xs">
             {violations
               .filter((v) => category === v[categoryName])
@@ -27,12 +34,24 @@ function RuleViolation({ categoryName, category, violations }) {
                     dispatch(setSelectedItem(violation.id));
                   }}
                   className={selectedItemId === violation.id ? 'selected-item' : ''}
+                  icon ={ 
+                    <ActionIcon 
+                    style={{border: 'solid'}}
+                    size="xl" onClick={() => setModal(true)}>
+                      <IconAlertHexagon />
+                    </ActionIcon>
+                  }
                 >
+                    
+
                   {violation.title}
+                  <RuleModal visible={modal} setVisible={setModal}>
+                    <FeedbackFrom />
+                  </RuleModal>
                 </List.Item>
               ))}
           </List>
-        </div>
+        </Text>
 
       </Accordion.Panel>
     </Accordion.Item>
