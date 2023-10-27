@@ -20,8 +20,8 @@ const File = ({ file, remove, index }) => {
     else{ formData.append('ruleSet',[])}
     axios.post('http://localhost:8081/api/uploadPDF', formData)
       .then(response => {
-        if (response.data.ruleViolations.length === 0) {
-          setDocumentReport(1);
+        if (!response.data.ruleViolations) {
+          setDocumentReport(null);
         }
         else{
         setDocumentReport(response.data);        

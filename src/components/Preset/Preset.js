@@ -21,7 +21,7 @@ const Preset = ({ preset, visible }) => {
                     value={"radio" + preset.id}
                     label={preset.title}
                     onClick={() => {
-                        dispatch(setCurrentPreset(preset.body));
+                        dispatch(setCurrentPreset(preset.rules));
                     }}
                 />
             </Accordion.Control>
