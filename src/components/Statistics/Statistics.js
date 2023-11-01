@@ -1,8 +1,8 @@
 import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios'; 
-import { useDispatch, useSelector } from 'react-redux';
-import { Title, RingProgress, ColorSwatch, Group, Text, ScrollArea, Col, Row } from '@mantine/core';
+import { useSelector } from 'react-redux';
+import { Title, RingProgress, ColorSwatch, Text} from '@mantine/core';
 import './Statistics.css'
 const Statistics = () => {
   const [wordData, setWordData] = useState([]);

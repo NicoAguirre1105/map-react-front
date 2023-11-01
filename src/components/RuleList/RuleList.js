@@ -17,7 +17,7 @@ const RuleList = ({ rules, value, onChange, visibility }) => {
           <Accordion.Panel>
             <Checkbox.Group
               value={value} onChange={onChange}
-              defaultValue={rules.map(r => r.title)}
+              defaultValue={rules.map(r => r.name)}
             >
               <Group >
                 {rules.map(rule =>

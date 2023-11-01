@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useRef } from 'react';
+import React from 'react';
 import { useHistory , useParams} from 'react-router-dom'
 import { Container, Tabs, createStyles, rem } from '@mantine/core';
 import '../../css/App.css';

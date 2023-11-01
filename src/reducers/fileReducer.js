@@ -1,8 +1,10 @@
-import { UPLOAD_FILE, VIEW_FILE, RESET_VARIABLE, SET_CURRENT_PAGE, SET_CURRENT_FILE_NAME,SET_CURRENT_LINE, GET_RULE_VIOLATIONS,SET_SELECTED_ITEM,SET_CURRENT_PRESET} from '../actions/actionTypes';
+import { SET_RULE_SET, UPLOAD_FILE, VIEW_FILE, RESET_VARIABLE, SET_CURRENT_PAGE, SET_CURRENT_FILE_NAME,SET_CURRENT_LINE, GET_RULE_VIOLATIONS,SET_SELECTED_ITEM,SET_CURRENT_PRESET} from '../actions/actionTypes';
 
 const initialState = {
+  apiUrl:"http://localhost:8081/api",
+  ruleSet:[],
   files: [],
-  currentFile: null,
+  currentFile:null,
   currentPage:null,
   currentLine:0,
   currentFileName:null,
@@ -58,7 +60,13 @@ const fileReducer = (state = initialState, action) => {
               ...state,
               currentPreset: [action.payload.data],
             };
-      default:
+            case SET_RULE_SET:
+              return {
+                ...state,
+                ruleSet: [action.payload.data],
+              };
+            default:
+
       return state;
   }
 };

@@ -9,11 +9,10 @@ import ListContainer from '../components/ListContainer/ListContainer';
 
 const Presets = () => {
     const [presets, setPresets] = useState([
-        [
-            { id: 0, title: "Rles1222", body: ["configuration3","lol"] },
-            { id: 1, title: "abcd2ddddd", body: ["configuration2","lol"] },
-            { id: 2, title: "Rules3", body: ["configuration1","lol"] }
-          ]
+        
+            { id: 1, name: "Правли про ссылки", rules: ["Ссылка на низкокачественную конференцию", "Неверный порядок ссылок на литературу", "Ссылки разных видов", "Нельзя пользоваться url-сокращателями. Ведь если сайт исчезнет или потеряет базу данных то работа потеряет в читабельности."] },
+        
+          
     ])
 
 
@@ -26,8 +25,8 @@ const Presets = () => {
     const [searchQuery, setSearchQuery] = useState('')
 
     const selectedPresets = useMemo(() => {
-        return presets.filter((preset) => {if (preset && preset.title) {
-            return preset.title.toLowerCase().includes(searchQuery.toLowerCase());
+        return presets.filter((preset) => {if (preset && preset.name) {
+            return preset.name.toLowerCase().includes(searchQuery.toLowerCase());
           }
           return false;})
     }, [searchQuery, presets])

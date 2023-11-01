@@ -44,7 +44,7 @@ function RuleViolation({ categoryName, category, violations }) {
                 >
                     
 
-                  {violation.title}
+                  {violation.name}
                   <RuleModal visible={modal} setVisible={setModal}>
                     <FeedbackFrom />
                   </RuleModal>

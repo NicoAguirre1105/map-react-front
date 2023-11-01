@@ -5,54 +5,53 @@ import RuleViolationList from '../RuleViolationList/RuleViolationsList';
 import RuleSelect from '../RuleSelect/RuleSelect';
 import RuleList from '../RuleList/RuleList';
 import FileView from '../FileView/FileView';
-import { rulesFul } from '../../rules';
 import './RuleViolationsContent.css'
 import { useDispatch } from 'react-redux';
-import { setCurrentLine,setCurrentPage} from '../../actions/fileAction';
+import { setCurrentLine,setCurrentPage, setSelectedItem} from '../../actions/fileAction';
 import { ActionIcon } from '@mantine/core';
 import { IconAlertHexagon } from '@tabler/icons-react';
 import RuleModal from '../RuleModal/RuleModal'
 import FeedbackFrom from '../FeedbackForm/FeedbackForm';
 
 const RuleViolationsContent = () => {
-
+  const rulesFul = useSelector((state) => state.file.ruleSet[0]);
   const dispatch = useDispatch();
   const ruleViolations = useSelector((state)=> state.file.ruleViolations);
   const [selectedItemId, setSelectedItemId] = useState(null);
   const rulesNotFiltred = (ruleViolations.length > 0) ? ruleViolations[0].data.map(item =>({
-    title: item.message
+    name: item.message
   })) : []
   const uniqueRules = [];
   const uniqueTitles = [];
   
   rulesNotFiltred.forEach(obj => {
-    const title = obj.title;
-    if (!uniqueTitles.includes(title)) {
-        uniqueTitles.push(title);
+    const name = obj.name;
+    if (!uniqueTitles.includes(name)) {
+        uniqueTitles.push(name);
         uniqueRules.push(obj);
     }
 });
-  const rules = rulesFul.filter(item => uniqueRules.some(i => i.title === item.title));
+  const rules = rulesFul.filter(item => uniqueRules.some(i => i.name === item.name));
   const targetArray = (ruleViolations.length > 0) ? ruleViolations[0].data.map(item => ({
-    title: item.message,
+    name: item.message,
     page: item.lines[0].page,
     section: item.lines[0].area,
     line: item.lines[0].index,
     id: JSON.stringify({
-      title: item.message,
+      name: item.message,
       page: item.lines[0].page,
       line: item.lines[0].index,
     }),
   })) : [];
 
-  const options = ['title', 'page']
+  const options = ['name', 'page']
 
-  const [selectedRules, setSelectedRules] = useState([...rules].map(r => r.title))
+  const [selectedRules, setSelectedRules] = useState([...rules].map(r => r.name))
   const [selectedSort, setSelectedSort] = useState('')
 
   const selectedRuleViolations = useMemo(() => {
      return targetArray
-     .filter(r => selectedRules.includes(r["title"]))
+     .filter(r => selectedRules.includes(r["name"]))
   }, [selectedRules]
   );
 
@@ -108,7 +107,8 @@ const RuleViolationsContent = () => {
             {selectedRuleViolations
             .map(v => <List.Item  
               onClick={()=>{dispatch(setCurrentLine(v.line));
-              dispatch(setCurrentPage(v.page));  
+              dispatch(setCurrentPage(v.page)); 
+              dispatch(setSelectedItem(v.name))
                setSelectedItemId(v.id);}}  
                className={selectedItemId === v.id? 'selected-item' : ''}
                  icon ={ 
@@ -119,7 +119,7 @@ const RuleViolationsContent = () => {
                    </ActionIcon>
                  }
                  >
-                {v.title}
+                {v.name}
                 </List.Item>)}
               </ScrollArea>
           </List> :

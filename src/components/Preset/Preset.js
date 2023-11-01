@@ -3,7 +3,7 @@ import { Radio } from '@mantine/core';
 import { Accordion, Text, Title, List } from '@mantine/core';
 import './Preset.css'
 import { setCurrentPreset } from '../../actions/fileAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Preset = ({ preset, visible }) => {
     const listVisibility = visible ? "hidden" : "";
@@ -19,7 +19,7 @@ const Preset = ({ preset, visible }) => {
                 <Radio
                     color="violet"
                     value={"radio" + preset.id}
-                    label={preset.title}
+                    label={preset.name}
                     onClick={() => {
                         dispatch(setCurrentPreset(preset.rules));
                     }}

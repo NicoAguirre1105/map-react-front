@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { resetVariable } from '../actions/fileAction';
 import { Container, Text, Title, Button, Group } from '@mantine/core';
 import { Accordion } from '@mantine/core';
-import { rulesFul } from '../rules';
 import '../css/home.css'
-
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
+  const rulesFul = useSelector((state) => state.file.ruleSet[0]);
   const dispatch = useDispatch();
   const handleReset = () => {
     sessionStorage.setItem("tabs", "Presets");
     dispatch(resetVariable());
   };
-
   return (
     <div className='homePage'>
-
-
       <div className="homeHeader">
         <Container size={700} className="homeText">
           <Title className="name">
@@ -71,11 +67,13 @@ const Home = () => {
               <Accordion.Control>
                 <Text
                   value={"id" + index}
-                >{rule.title}</Text>
+                >{rule.name}</Text>
               </Accordion.Control>
 
               <Accordion.Panel >
-                <Text color="dimmed">{rule.description} </Text>
+
+              <p dangerouslySetInnerHTML={{ __html: rule.description }}></p>
+
               </Accordion.Panel>
             </Accordion.Item>
           ))}

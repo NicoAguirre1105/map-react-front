@@ -1,5 +1,4 @@
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { FileButton, Button } from '@mantine/core';
 import { uploadFile } from '../actions/fileAction';
@@ -9,14 +8,29 @@ import RuleInput from '../components/RuleInput/RuleInput';
 import axios from 'axios';
 
 const Download = () => {
-  const apiUrl = 'http://localhost:8081/api/viewPDFText';
   const [files, setFiles] = useState([]);
   const [searchQuery, setSearchQuery] = useState('')
   const dispatch = useDispatch();
+  const [refreshKey, setRefreshKey] = useState(0);
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const response = await axios.get('http://localhost:8081/api/listUploadedPDFsWithReports');
+        const newFiles = response.data.filter((respFile) => !files.find((file) => file.name === respFile.name));
+        setFiles((existingFiles) => [...existingFiles, ...newFiles]);
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    };
+  
+    fetchDocuments();
+  }, []);
+
+  console.log(files);
 
   const selectedFiles = useMemo(() => {
-    return files.filter(file => file.name.toLowerCase().includes(searchQuery.toLowerCase()))
-  }, [searchQuery, files])
+    return files.filter(file => file && file.name && file.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  }, [searchQuery, files]);
 
   const handleFileChange = (props) => {
     setFiles([...props, ...files])
@@ -26,12 +40,12 @@ const Download = () => {
   };
 
   const removeFile = (file) => {
-    setFiles(files.filter(f => f !== file))
+    setFiles(files.filter(f => f !== file));
+    setRefreshKey(refreshKey + 1);
   }
 
   const buttons = [
     <FileButton multiple
-    
       onChange={handleFileChange}
       accept="application/pdf">
       {(props) =>
@@ -57,6 +71,4 @@ const Download = () => {
   );
 };
 
-
-
-export default Download; 
+export default Download;

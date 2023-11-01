@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio, Accordion, ScrollArea } from '@mantine/core';
+import { Radio, Accordion } from '@mantine/core';
 import Preset from '../Preset/Preset';
 import './PresetsList.css';
 const PresetList = ({ presets, visible }) => {

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from '@mantine/form';
 import { Button, TextInput, Text, ScrollArea, Checkbox, Group, Accordion } from '@mantine/core';
-import { rulesFul } from '../../rules';
+import { useSelector} from 'react-redux';
 import './RuleForm.css';
 
 const RuleForm = ({ create }) => {
-
+  const rulesFul = useSelector((state) => state.file.ruleSet[0]);
   const formRules = []
   rulesFul.map(rule => {
     const curRule = {
-      title: `${rule.title}`,
+      name: `${rule.name}`,
       checked: false
     }
     formRules.push(curRule)
@@ -17,34 +17,34 @@ const RuleForm = ({ create }) => {
   )
   const form = useForm({
     initialValues: {
-      title: '',
+      name: '',
       rules: formRules
     },
 
     validate: {
-      title: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
       rules: (value) => value.every(obj => obj.checked === false)
     },
   });
 
   const [preset, setPreset] = useState({
     id: Date.now(),
-    title: '',
+    name: '',
     rules: [],
   });
 
-  const savePreset = ({ title, rules }) => {
-    const ruleTitles = rules.filter(rule => rule.checked === true).map(rule => rule.title);
+  const savePreset = ({ name, rules }) => {
+    const ruleTitles = rules.filter(rule => rule.checked === true).map(rule => rule.name);
     const newPreset = {
       id: Date.now(),
-      title: title,
+      name: name,
       rules: ruleTitles,
     };
 
     create(newPreset);
     setPreset({
       id: Date.now(),
-      title: '',
+      name: '',
       rules: [],
     });
   };
@@ -54,7 +54,7 @@ const RuleForm = ({ create }) => {
       <TextInput
         placeholder="Rules preset name"
         size="md"
-        {...form.getInputProps('title')}
+        {...form.getInputProps('name')}
       />
 
       <div className="rules-container">
@@ -69,13 +69,13 @@ const RuleForm = ({ create }) => {
                   <Checkbox
                     color='violet'
                     {...form.getInputProps(`rules.${index}.checked`, { type: 'checkbox' })}
-                    label={rule.title}
+                    label={rule.name}
                     value={"id" + index}
                   />
                 </Accordion.Control>
 
                 <Accordion.Panel >
-                    <Text color="dimmed">{rule.description} </Text>
+                <p dangerouslySetInnerHTML={{ __html: rule.description }}></p>
                 </Accordion.Panel>
               </Accordion.Item>
         ))}
