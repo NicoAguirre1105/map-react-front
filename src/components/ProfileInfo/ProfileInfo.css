@@ -1,0 +1,15 @@
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: fit-content;
+    border-radius: 5px;
+    background-color: var(--colorF);
+    padding: 30px;
+}
+
+.info-container h1 {
+    color: var(--colorB);
+    margin-bottom: 20px;
+}

@@ -1,0 +1,91 @@
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0 10px 20px;
+    height: 45px;
+}
+
+.info-item + .info-item {
+    border-top: 1px solid var(--colorB);
+}
+
+.info-item h3 {
+    display: flex;
+    width: 180px;
+    color: var(--colorB);
+}
+
+.info-item p {
+    display: flex;
+    width: 280px;
+    color: var(--colorB);
+}
+
+.info-item span {
+    display: flex;
+    fill: var(--colorA);
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    margin: 4px 0;
+}
+
+.info-item span:hover {
+    transform: scale(1.2);
+}
+
+/* Edit Mode */
+
+.info-item form {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    gap: 0;
+}
+
+.info-item input[type="text"], .info-item input[type="email"] {
+    display: flex;
+    width: 230px;
+    margin-right: 32px;
+    border: none;
+    padding: 2px 5px;
+    color: var(--colorA);
+}
+
+.info-item input[type="text"]::placeholder, input[type="email"]::placeholder {
+    color: #910aff75;
+}
+
+.info-item input[type="text"]:focus, input[type="email"]:focus {
+    outline: none;
+    border: 2px solid var(--colorA);
+}
+
+.info-item input[type="submit"] {
+    display: flex;
+    width: 50px;
+    justify-content: center;
+    background-color: var(--colorA);
+    color: var(--colorW);
+    padding: 2px 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    font-size: 13px;
+}
+
+.info-item input[type="submit"]:hover {
+    background-color: var(--colorB);
+    transform: scale(1.1);
+}
+
+.info-item form {
+    position: relative;
+}
+
+.info-item .error-message {
+    position: absolute;
+    top: 20px;
+    font-size: 10px;
+    color: var(--colorR);
+}
