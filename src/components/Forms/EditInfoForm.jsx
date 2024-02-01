@@ -1,6 +1,6 @@
 import { useForm } from "../hooks/useForm";
 
-export function EditInfoForm({handleClick, label, handleDone}){
+export function EditInfoForm({handleClick, label}){
 
     const validateForm = (form) => {
         let errors = {}
@@ -13,7 +13,7 @@ export function EditInfoForm({handleClick, label, handleDone}){
             errors.edited = "Email is not valid"
         }
         // Sumar la verificacion de que el correo consta en la base de datos
-        
+
         return errors
     }
 
