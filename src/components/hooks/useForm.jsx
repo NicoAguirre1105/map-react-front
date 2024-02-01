@@ -2,9 +2,10 @@ import { useState } from "react";
 
 export function useForm(initialForm, validateForm, submit){
     const [form, setForm] = useState(initialForm);
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState(false)
     const [loading, setLoading] = useState(false)
     const [response, setResponse] = useState(null)
+    const [tried, setTried] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -18,11 +19,14 @@ export function useForm(initialForm, validateForm, submit){
 
     const handleBlur = (e) => {
         handleChange(e)
-        setErrors(validateForm(form))
+        if(tried){
+            setErrors(validateForm(form))
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setTried(true)
         let temp_errors = validateForm(form) 
         setErrors(temp_errors)
 

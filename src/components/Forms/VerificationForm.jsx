@@ -1,6 +1,6 @@
 import { useForm } from "../hooks/useForm";
 
-export function VerificationForm({mode, setModalMode}){
+export function VerificationForm({changeStep}){
     const validateForm = (form) => {
         let errors = {}
 
@@ -16,25 +16,17 @@ export function VerificationForm({mode, setModalMode}){
         return errors
     }
 
-    const verificationSubmit = () => {
-        if (mode === "VerificationEmail") {
-            setModalMode("User Information")
-        } else if (mode === "Verification") { 
-            setModalMode("Done")
-        }else {
-            setModalMode("New Password")
-        }
-    }
-
     const  initialForm = {code:""}
-    const {form, errors, loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm, validateForm, verificationSubmit)
+    const {form, errors, loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm, validateForm, changeStep)
 
     return (
         <>
             <form onSubmit={handleSubmit}>
                 <p className="copy-text">Please enter your 6-digit code that has been sent to your email address. This code is valid for 5 minutes!</p>
                 <input type="text" name="code" placeholder="Verification Code" onChange={handleChange} onBlur={handleBlur} value={form.code}/>
-                {errors.code && <p className="error-message">{errors.code}</p>}
+                <div className="error-container">
+                    {errors.code && <p className="error-message">{errors.code}</p>}
+                </div>
                 <input type="submit" value="Verify Code" />
             </form>
         </>

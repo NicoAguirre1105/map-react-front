@@ -3,7 +3,7 @@ aside {
     display: flex;
     flex-direction: column;
     width: 250px;
-    background-color: var(--colorF);
+    background-color: var(--colorG);
     align-items: center;
     padding: 20px;
     border-radius: 5px;

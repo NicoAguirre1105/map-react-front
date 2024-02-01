@@ -4,20 +4,24 @@ import store from "./store";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import About from './pages/about';
 import Home from './pages/home';
-import Header from "./components/Header/Header";
+import { Header } from "./components/Header/Header.jsx";
 import Download from "./pages/download";
 import Presets from "./pages/presets"
 import ProcessFile from "./pages/processfile";
 import Profile from "./pages/profile";
 import { setRuleSet } from './actions/fileAction';
+import "./css/App.css"
+
 function App() {
  
+  const user = {}
+
   return (
     
     <Provider store={store}>
       <div className="App">
         <Router>
-          <Header />
+          <Header user={user}/>
           <Route path="/" exact component={Home} />
           <Route path="/Home" exact component={Home} />
           <Route path="/Download" component={Download} />

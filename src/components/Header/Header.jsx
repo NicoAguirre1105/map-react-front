@@ -1,23 +1,59 @@
-// import logo from "./ubi"
-import { AccountSection } from "../AccountSection/AccountSection"
-import "./Header.css";
+import { useState } from "react"
+import { Avatar } from "../Avatar/Avatar"
+import { WindowPopUp } from "../WindowPopUp/WindowPopUp"
+import { Message } from "../Message/Message"
+import "./Header.css"
 
-function Header() {
-  return (
-    <header className="header">
-      {/* <img src={} alt="" className="className" /> */}
-      <div className="logo"></div>
-      <nav className='nav-desktop'>
-        <ul className="page-menu">
-          <li><a href="./Home">Главная</a></li>
-          <li><a href="./About">Компания</a></li>
-          <li><a href="./Presets">Настройки</a></li>
-          <li><a href="./Download">Загрузка</a></li>
-        </ul>
-        <AccountSection/>
-      </nav>
-    </header>
-  );
+export function Header({user}) {
+
+    const [mode, setMode] = useState("")
+    const isUser = Object.keys(user).length !== 0
+    const [message, setMessage] = useState({})
+
+
+    const handleButtton_Login = () => {
+        setMode("Login")
+    }
+    const handleButtton_Register = () => {
+        setMode("Register")
+    }
+
+    const showMessage = (msg) => {
+        setMessage(msg)
+        setTimeout(() => {
+            setMessage({})
+        }, 5000)
+    }
+
+    return (
+        <>
+        <header className="header">
+            <div className="logo"></div>
+            <nav>
+                <ul>
+                    <li><a href="./Home">Home</a></li>
+                    <li><a href="./About">About</a></li>
+                    <li><a href="./Download">Download</a></li>
+                    <li><a href="./Presets">Presets</a></li>
+                    <li><a href="./ProcessFile">Process File</a></li>
+                </ul>
+            </nav>
+            <div className="options">
+                {isUser && 
+                    <Avatar user={user}/>
+                }
+                {!isUser && 
+                    <>
+                        <button className="button-A button-login" onClick={handleButtton_Login}>Login</button>
+                        <button className="button-B button-register" onClick={handleButtton_Register}>Register</button>
+                    </>
+                }
+            </div>
+        </header>
+        {mode !== "" && 
+            <WindowPopUp mode={mode} setMode={setMode} showMessage={showMessage}/>
+        }
+        {Object.keys(message).length !== 0 && <Message message={message}/>}
+        </>
+    )
 }
-
-export default Header;

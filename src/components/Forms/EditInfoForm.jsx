@@ -14,7 +14,6 @@ export function EditInfoForm({handleClick, label, handleDone}){
         }
         // Sumar la verificacion de que el correo consta en la base de datos
         
-        console.log(errors)
         return errors
     }
 

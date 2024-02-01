@@ -1,6 +1,6 @@
 import { useForm } from "../hooks/useForm";
 
-export function UserInfoForm({submit}){
+export function UserInfoForm({changeStep}){
     const validateForm = (form) => {
         let errors = {}
         
@@ -15,19 +15,27 @@ export function UserInfoForm({submit}){
     }
 
     const  initialForm = {name:"", lastName:"", organization:"None", role:"None"}
-    const {form, errors, loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm, validateForm, submit)
+    const {form, errors, loading, response, handleChange, handleBlur, handleSubmit} = useForm(initialForm, validateForm, changeStep)
 
     return (
         <>
             <form onSubmit={handleSubmit}>
                 <input type="text" name="name" placeholder="Name" onChange={handleChange} onBlur={handleBlur} value={form.name}/>
-                {errors.name && <p className="error-message">{errors.name}</p>}
+                <div className="error-container">
+                    {errors.name && <p className="error-message">{errors.name}</p>}
+                </div>
                 <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} onBlur={handleBlur} value={form.lastName}/>
-                {errors.lastName && <p className="error-message">{errors.lastName}</p>}
+                <div className="error-container">
+                    {errors.lastName && <p className="error-message">{errors.lastName}</p>}
+                </div>
                 <input type="text" name="organization" placeholder="Organization" onChange={handleChange} onBlur={handleBlur} value={form.organization}/>
-                {errors.organization && <p className="error-message">{errors.organization}</p>}
+                <div className="error-container">
+                    {errors.organization && <p className="error-message">{errors.organization}</p>}
+                </div>
                 <input type="text" name="role" placeholder="Role" onChange={handleChange} onBlur={handleBlur} value={form.role}/>
-                {errors.role && <p className="error-message">{errors.role}</p>}
+                <div className="error-container">
+                    {errors.role && <p className="error-message">{errors.role}</p>}
+                </div>
                 <input type="submit" value="Done"/>
             </form>
         </>
