@@ -60,23 +60,7 @@ const Home = () => {
       <Title style={{ paddingTop: '200px', paddingBottom: '30px' }}>Rules</Title>
       <div className='list'>
         <Accordion style={{ width: 'calc(180px + 495 * (100vw / 1280))' }} variant="default">
-          {rulesFul.map((rule, index) => (
-            <Accordion.Item
-              value={"id" + index}
-            >
-              <Accordion.Control>
-                <Text
-                  value={"id" + index}
-                >{rule.name}</Text>
-              </Accordion.Control>
-
-              <Accordion.Panel >
-
-              <p dangerouslySetInnerHTML={{ __html: rule.description }}></p>
-
-              </Accordion.Panel>
-            </Accordion.Item>
-          ))}
+          
         </Accordion>
 
       </div>
