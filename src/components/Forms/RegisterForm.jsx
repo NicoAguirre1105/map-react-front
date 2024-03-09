@@ -35,15 +35,15 @@ export function RegisterForm({changeStep, changeMode}) {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <input type="email" name="email" placeholder="Email" onChange={handleChange} onBlur={handleBlur} value={form.email}/>
+                <input type="email" name="email" placeholder="Email" onChange={handleChange} onBlur={handleBlur} value={form.email} required/>
                 <div className="error-container">
                     {errors.email && <p className="error-message">{errors.email}</p>}
                 </div>
-                <input type="password" name="password" placeholder="Password" onChange={handleChange} onBlur={handleBlur} value={form.password}/>
+                <input type="password" name="password" placeholder="Password" onChange={handleChange} onBlur={handleBlur} value={form.password} required/>
                 <div className="error-container">
                     {errors.password && <p className="error-message">{errors.password}</p>}
                 </div>
-                <input type="password" name="passwordRep" placeholder="Repeat password"onChange={handleChange} onBlur={handleBlur} value={form.passwordRep}/>
+                <input type="password" name="passwordRep" placeholder="Repeat password"onChange={handleChange} onBlur={handleBlur} value={form.passwordRep} required/>
                 <div className="error-container">
                     {errors.passwordRep && <p className="error-message">{errors.passwordRep}</p>}
                 </div>
